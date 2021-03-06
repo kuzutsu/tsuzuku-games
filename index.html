@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Tsuzuku Games</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Play anime metadata games, even when offline!">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#fff">
+        <link rel="icon" href="logo-192.png">
+        <link rel="apple-touch-icon" href="logo-maskable-192.png">
+        <link rel="manifest" href="manifest.webmanifest">
+        <link rel="preload" href="https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2" as="font" crossorigin>
+        <link rel="preload" href="https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBBc4AMP6lQ.woff2" as="font" crossorigin>
+        <link href="index.css" rel="stylesheet">
+    </head>
+    <body class="light">
+        <noscript>
+            <span class="full">Tsuzuku can't run without JavaScript</span>
+        </noscript>
+        <header style="height: 56px; display: flex; align-items: center; padding: 0 19px; user-select: none;">
+            <a href="https://kuzutsu.github.io/tsuzuku/" target="_blank" rel="noreferrer" style="color: #aaa;">Tsuzuku</a>
+            <span style="color: #aaa; margin-left: 7px;">/</span>
+            <span style="font-weight: 500; margin-left: 7px;">Games</span>
+            <span style="width: 100%; min-width: 14px;"></span>
+            <span class="score"></span>
+            <select class="pictures" style="margin-left: 14px; font-size: 16px;">
+                <option>enable</option>
+                <option>disable</option>
+            </select>
+            <select class="type" style="margin-left: 14px; font-size: 16px;">
+                <option>tags</option>
+                <option>year</option>
+                <option>episodes</option>
+                <option>season</option>
+            </select>
+            <select class="choices" style="margin-left: 14px; font-size: 16px;">
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>10</option>
+            </select>
+            <span class="theme" title="Toggle theme" style="margin-left: 14px; display: flex; align-items: center; justify-content: center;">
+                <svg viewBox="0 0 24 24" width="19" height="19">
+                    <path d="M20 15.31L23.31 12 20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69zM12 18V6c3.31 0 6 2.69 6 6s-2.69 6-6 6z"></path>
+                </svg>
+            </span>
+        </header>
+        <main style="display: flex; flex-wrap: wrap; flex-direction: column; font-size: 14px;">
+            <div class="query" style="white-space: nowrap; display: flex; align-items: center; padding: 0 19px; height: 49px;">
+                <span class="reload" style="display: flex; align-items: center; justify-content: center; height: 40px; width: 40px; min-height: 40px; min-width: 40px;">
+                    <svg viewBox="0 0 24 24" width="19" height="19">
+                        <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"></path>
+                    </svg>
+                </span>
+                <span class="syntax" style="margin-left: 14px;"></span>
+                <span class="title" style="font-weight: 500;"></span>
+            </div>
+            <div class="choice"></div>
+        </main>
+        <script>
+            if (!localStorage.getItem('pictures')) {
+                localStorage.setItem('pictures', 'enable');
+            }
+
+            if (!localStorage.getItem('choices')) {
+                localStorage.setItem('choices', 4);
+            }
+
+            if (!localStorage.getItem('type')) {
+                localStorage.setItem('type', 'tags');
+            }
+
+            if (!localStorage.getItem('score')) {
+                localStorage.setItem('score', 0);
+            }
+
+            document.querySelector('.pictures').value = localStorage.getItem('pictures');
+            document.querySelector('.choices').value = localStorage.getItem('choices');
+            document.querySelector('.type').value = localStorage.getItem('type');
+            document.querySelector('.score').innerHTML = localStorage.getItem('score');
+
+            switch (localStorage.getItem('theme')) {
+                case 'dark':
+                    document.body.classList.remove('light');
+                    document.body.classList.add('dark');
+                    document.head.querySelector('[name="theme-color"]').content = '#000';
+                    break;
+
+                case 'light':
+                    break;
+
+                default:
+                    localStorage.setItem('theme', 'light');
+                    break;
+            }
+
+            if ('serviceWorker' in navigator) {
+                navigator
+                    .serviceWorker
+                    .register('sw.js')
+                    .then((registration) => {
+                        registration.addEventListener('updatefound', () => {
+                            let r = registration.installing;
+                            
+                            r.addEventListener('statechange', () => {
+                                if (r.state === 'installed') {
+                                    r.postMessage({
+                                        update: true
+                                    });
+                                }
+                            });
+                        });
+                    });
+            }
+
+            document.querySelector('.theme').addEventListener('click', () => {
+                if (localStorage.getItem('theme') === 'dark') {
+                    document.body.classList.remove('dark');
+                    document.body.classList.add('light');
+                    document.head.querySelector('[name="theme-color"]').content = '#fff';
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.body.classList.remove('light');
+                    document.body.classList.add('dark');
+                    document.head.querySelector('[name="theme-color"]').content = '#000';
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        </script>
+        <script defer type="module" src="index.js"></script>
+    </body>
+</html>
