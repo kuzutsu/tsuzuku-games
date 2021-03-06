@@ -87,6 +87,8 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                 tag = tags[Math.round(Math.random() * (tags.length - 1))],
                 year = years[Math.round(Math.random() * (years.length - 1))];
 
+            document.querySelector('.query a').href = 'https://kuzutsu.github.io/tsuzuku/?query=';
+
             switch (localStorage.getItem('type')) {
                 case 'episodes':
                     document.querySelector('.query a').href += encodeURIComponent(`episodes:${episode}`);
