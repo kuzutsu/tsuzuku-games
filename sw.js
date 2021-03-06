@@ -24,8 +24,7 @@ self.addEventListener('install', (event) => {
                 // third-party
                 'https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2',
                 'https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBBc4AMP6lQ.woff2',
-                'anime-offline-database.json'
-                // 'https://raw.githubusercontent.com/manami-project/anime-offline-database/master/anime-offline-database.json'
+                'https://raw.githubusercontent.com/manami-project/anime-offline-database/master/anime-offline-database.json'
             ]))
     );
 });
