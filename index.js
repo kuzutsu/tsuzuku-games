@@ -208,10 +208,10 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                 if (localStorage.getItem('pictures') === 'disable') {
                     div.innerHTML = '<span style="height: 40px; width: 40px; min-height: 40px; min-width: 40px;"></span>';
                 } else {
-                    div.innerHTML = `<img class="picture" src="${database[random].picture}" style="height: 40px; width: 40px; min-height: 40px; min-width: 40px; object-fit: cover; user-select: none;"></img>`;
+                    div.innerHTML = `<img class="picture" src="${database[random].picture}" loading="lazy" alt style="height: 40px; width: 40px; min-height: 40px; min-width: 40px; object-fit: cover; user-select: none;"></img>`;
                 }
 
-                div.innerHTML += `<img src="${database[random].source}" style="margin-left: 14px; height: 17px; width: 17px; min-height: 17px; min-width: 17px; object-fit: cover; user-select: none;"><span style="margin-left: 14px; overflow-wrap: anywhere; min-width: 100px; padding: 4px 0;">${database[random].title}</span>`;
+                div.innerHTML += `<img src="${database[random].source}" loading="lazy" alt style="margin-left: 14px; height: 17px; width: 17px; min-height: 17px; min-width: 17px; object-fit: cover; user-select: none;"><span style="margin-left: 14px; overflow-wrap: anywhere; min-width: 100px; padding: 4px 0;">${database[random].title}</span>`;
                 document.querySelector('.choice').appendChild(div);
             }
         }
