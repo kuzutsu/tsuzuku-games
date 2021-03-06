@@ -88,22 +88,27 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                 year = years[Math.round(Math.random() * (years.length - 1))];
 
             switch (localStorage.getItem('type')) {
-                case 'season':
-                    document.querySelector('.syntax').innerHTML = 'season:';
-                    document.querySelector('.title').innerHTML = season;
-                    break;
-                case 'year':
-                    document.querySelector('.syntax').innerHTML = 'year:';
-                    document.querySelector('.title').innerHTML = year;
-                    break;
                 case 'episodes':
-                    document.querySelector('.syntax').innerHTML = 'episodes:';
-                    document.querySelector('.title').innerHTML = episode;
+                    document.querySelector('.query a').href += encodeURIComponent(`episodes:${episode}`);
+                    document.querySelector('.query a').innerHTML = `episodes:<span style="font-weight: 500;">${episode}</span>`;
                     break;
+
+                case 'season':
+                    document.querySelector('.query a').href += encodeURIComponent(`season:${season}`);
+                    document.querySelector('.query a').innerHTML = `season:<span style="font-weight: 500;">${season}</span>`;
+                    break;
+
                 case 'tags':
+                    document.querySelector('.query a').href += encodeURIComponent(`tags:${tag}`);
+                    document.querySelector('.query a').innerHTML = `tags:<span style="font-weight: 500;">${tag}</span>`;
+                    break;
+
+                case 'year':
+                    document.querySelector('.query a').href += encodeURIComponent(`year:${year}`);
+                    document.querySelector('.query a').innerHTML = `year:<span style="font-weight: 500;">${year}</span>`;
+                    break;
+
                 default:
-                    document.querySelector('.syntax').innerHTML = 'tags:';
-                    document.querySelector('.title').innerHTML = tag;
                     break;
             }
 
