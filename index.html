@@ -12,6 +12,43 @@
         <link rel="preload" href="https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2" as="font" crossorigin>
         <link rel="preload" href="https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBBc4AMP6lQ.woff2" as="font" crossorigin>
         <link href="index.css" rel="stylesheet">
+        <script>
+            switch (localStorage.getItem('theme')) {
+                case 'dark':
+                    document.body.classList.remove('light');
+                    document.body.classList.add('dark');
+                    document.head.querySelector('[name="theme-color"]').content = '#000';
+                    break;
+
+                case 'light':
+                    break;
+
+                default:
+                    localStorage.setItem('theme', 'light');
+                    break;
+            }
+
+            if (!localStorage.getItem('thumbnails')) {
+                localStorage.setItem('thumbnails', 'enable (high quality)');
+            }
+
+            if (!localStorage.getItem('choices')) {
+                localStorage.setItem('choices', 4);
+            }
+
+            if (!localStorage.getItem('type')) {
+                localStorage.setItem('type', 'tags');
+            }
+
+            if (!localStorage.getItem('score')) {
+                localStorage.setItem('score', 0);
+            }
+
+            document.querySelector('.thumbnails').value = localStorage.getItem('thumbnails');
+            document.querySelector('.choices').value = localStorage.getItem('choices');
+            document.querySelector('.type').value = localStorage.getItem('type');
+            document.querySelector('.score').innerHTML = localStorage.getItem('score');
+        </script>
     </head>
     <body class="light">
         <noscript>
@@ -64,42 +101,6 @@
             <div class="choice"></div>
         </main>
         <script>
-            if (!localStorage.getItem('thumbnails')) {
-                localStorage.setItem('thumbnails', 'enable (high quality)');
-            }
-
-            if (!localStorage.getItem('choices')) {
-                localStorage.setItem('choices', 4);
-            }
-
-            if (!localStorage.getItem('type')) {
-                localStorage.setItem('type', 'tags');
-            }
-
-            if (!localStorage.getItem('score')) {
-                localStorage.setItem('score', 0);
-            }
-
-            document.querySelector('.thumbnails').value = localStorage.getItem('thumbnails');
-            document.querySelector('.choices').value = localStorage.getItem('choices');
-            document.querySelector('.type').value = localStorage.getItem('type');
-            document.querySelector('.score').innerHTML = localStorage.getItem('score');
-
-            switch (localStorage.getItem('theme')) {
-                case 'dark':
-                    document.body.classList.remove('light');
-                    document.body.classList.add('dark');
-                    document.head.querySelector('[name="theme-color"]').content = '#000';
-                    break;
-
-                case 'light':
-                    break;
-
-                default:
-                    localStorage.setItem('theme', 'light');
-                    break;
-            }
-
             if ('serviceWorker' in navigator) {
                 navigator
                     .serviceWorker
