@@ -38,9 +38,7 @@ self.addEventListener('message', (event) => {
 self.addEventListener('fetch', (event) => {
     event.respondWith(
         caches
-            .match(event.request, {
-                ignoreSearch: true
-            })
+            .match(event.request)
             .then((cached) => cached || fetch(event.request))
     );
 
