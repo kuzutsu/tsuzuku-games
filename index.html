@@ -12,6 +12,11 @@
         <link rel="preload" href="https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2" as="font" crossorigin>
         <link rel="preload" href="https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBBc4AMP6lQ.woff2" as="font" crossorigin>
         <link href="index.css" rel="stylesheet">
+    </head>
+    <body class="light">
+        <noscript>
+            <span class="full">Tsuzuku Games can't run without JavaScript</span>
+        </noscript>
         <script>
             switch (localStorage.getItem('theme')) {
                 case 'dark':
@@ -43,17 +48,7 @@
             if (!localStorage.getItem('score')) {
                 localStorage.setItem('score', 0);
             }
-
-            document.querySelector('.thumbnails').value = localStorage.getItem('thumbnails');
-            document.querySelector('.choices').value = localStorage.getItem('choices');
-            document.querySelector('.type').value = localStorage.getItem('type');
-            document.querySelector('.score').innerHTML = localStorage.getItem('score');
         </script>
-    </head>
-    <body class="light">
-        <noscript>
-            <span class="full">Tsuzuku Games can't run without JavaScript</span>
-        </noscript>
         <header>
             <a href="https://kuzutsu.github.io/tsuzuku/" target="_blank" rel="noreferrer" style="color: #aaa;">Tsuzuku</a>
             <span style="color: #aaa; margin-left: 7px;">/</span>
@@ -101,6 +96,11 @@
             <div class="choice"></div>
         </main>
         <script>
+            document.querySelector('.thumbnails').value = localStorage.getItem('thumbnails');
+            document.querySelector('.choices').value = localStorage.getItem('choices');
+            document.querySelector('.type').value = localStorage.getItem('type');
+            document.querySelector('.score').innerHTML = localStorage.getItem('score');
+
             if ('serviceWorker' in navigator) {
                 navigator
                     .serviceWorker
