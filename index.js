@@ -54,6 +54,7 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
 
                 database.push({
                     episodes: e,
+                    link: value,
                     picture:
                         d[i].picture.match(/myanimelist\.net/gu)
                             ? d[i].picture.replace(d[i].picture.substr(d[i].picture.lastIndexOf('.')), '.webp')
@@ -154,6 +155,10 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                     }
 
                     div.addEventListener('click', (e) => {
+                        if (e.target.classList.contains('source')) {
+                            return;
+                        }
+
                         if (document.querySelector('.choice div[style]')) {
                             return;
                         }
@@ -196,6 +201,10 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                     }
 
                     div.addEventListener('click', (e) => {
+                        if (e.target.classList.contains('source')) {
+                            return;
+                        }
+
                         if (document.querySelector('.choice div[style]')) {
                             return;
                         }
@@ -227,7 +236,12 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                         break;
                 }
 
-                div.innerHTML += `<img class="source" src="${database[random].source}" loading="lazy" alt><span class="title">${database[random].title}</span>`;
+                div.innerHTML +=
+                    `<a class="link" href="${database[random].link}" target="_blank" rel="noreferrer">` +
+                        `<img class="source" src="${database[random].source}" loading="lazy" alt>` +
+                    '</a>' +
+                    `<span class="title">${database[random].title}</span>`;
+
                 document.querySelector('.choice').appendChild(div);
             }
         }

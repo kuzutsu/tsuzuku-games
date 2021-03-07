@@ -81,6 +81,7 @@ html {
 }
 
 a {
+    line-height: 0;
     text-decoration: none;
 }
 
@@ -180,6 +181,10 @@ header,
     justify-content: center;
 }
 
+.link {
+    margin-left: 14px;
+}
+
 .picture {
     height: 40px;
     width: 40px;
@@ -190,7 +195,6 @@ header,
 }
 
 .source {
-    margin-left: 14px;
     height: 17px;
     width: 17px;
     min-height: 17px;
