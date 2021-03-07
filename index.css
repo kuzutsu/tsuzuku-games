@@ -40,6 +40,10 @@
     color: var(--color);
 }
 
+.bold {
+    font-weight: 500;
+}
+
 .full {
     height: 100%;
     width: 100%;
@@ -106,6 +110,99 @@ select {
 }
 
 header,
-.query {
+.query,
+.settings {
     border-bottom: 1px solid var(--background-hover);
+}
+
+header {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    padding: 0 19px;
+    user-select: none;
+    overflow: auto;
+    will-change: transform;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+
+.query,
+.settings {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    padding: 0 19px;
+    height: 49px;
+    overflow: auto;
+    will-change: transform;
+}
+
+.separator {
+    width: 14px;
+    min-width: 14px;
+}
+
+.reload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    min-height: 40px;
+    min-width: 40px;
+}
+
+.choice {
+    overflow: auto;
+    will-change: transform;
+}
+
+.choices,
+.pictures,
+.type {
+    font-size: 14px;
+}
+
+.theme {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.picture {
+    height: 40px;
+    width: 40px;
+    min-height: 40px;
+    min-width: 40px;
+    object-fit: cover;
+    user-select: none;
+}
+
+.source {
+    margin-left: 14px;
+    height: 17px;
+    width: 17px;
+    min-height: 17px;
+    min-width: 17px;
+    object-fit: cover;
+    user-select: none;
+}
+
+.title {
+    margin-left: 14px;
+    overflow-wrap: anywhere;
+    min-width: 100px;
+    padding: 4px 0;
+}
+
+.no-picture {
+    height: 40px;
+    width: 40px;
+    min-height: 40px;
+    min-width: 40px;
 }

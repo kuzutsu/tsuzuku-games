@@ -1,5 +1,6 @@
 const
     database = [],
+    delay = 1000,
     episodes = [],
     green = '#2e7d32',
     red = '#c62828',
@@ -54,9 +55,9 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                 database.push({
                     episodes: e,
                     picture:
-                        d[i].picture.match(/myanimelist\.net/gu)
-                            ? d[i].picture.replace(d[i].picture.substr(d[i].picture.lastIndexOf('.')), '.webp')
-                            : d[i].picture,
+                        d[i].thumbnail.match(/myanimelist\.net/gu)
+                            ? d[i].thumbnail.replace(d[i].thumbnail.substr(d[i].thumbnail.lastIndexOf('.')), '.webp')
+                            : d[i].thumbnail,
                     season: d[i].animeSeason.season.toLowerCase(),
                     source:
                         value.match(/myanimelist\.net/gu)
@@ -74,7 +75,7 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
         years.sort();
 
         function game() {
-            document.querySelector('.score').innerHTML = localStorage.getItem('score') || 0;
+            document.querySelector('.score').innerHTML = localStorage.getItem('score');
 
             if (document.querySelector('.choice').innerHTML) {
                 document.querySelector('.choice').innerHTML = '';
@@ -92,22 +93,22 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
             switch (localStorage.getItem('type')) {
                 case 'episodes':
                     document.querySelector('.query a').href += encodeURIComponent(`episodes:${episode}`);
-                    document.querySelector('.query a').innerHTML = `episodes:<span style="font-weight: 500;">${episode}</span>`;
+                    document.querySelector('.query a').innerHTML = `episodes:<span class="bold">${episode}</span>`;
                     break;
 
                 case 'season':
                     document.querySelector('.query a').href += encodeURIComponent(`season:${season}`);
-                    document.querySelector('.query a').innerHTML = `season:<span style="font-weight: 500;">${season}</span>`;
+                    document.querySelector('.query a').innerHTML = `season:<span class="bold">${season}</span>`;
                     break;
 
                 case 'tags':
                     document.querySelector('.query a').href += encodeURIComponent(`tags:${tag}`);
-                    document.querySelector('.query a').innerHTML = `tags:<span style="font-weight: 500;">${tag}</span>`;
+                    document.querySelector('.query a').innerHTML = `tags:<span class="bold">${tag}</span>`;
                     break;
 
                 case 'year':
                     document.querySelector('.query a').href += encodeURIComponent(`year:${year}`);
-                    document.querySelector('.query a').innerHTML = `year:<span style="font-weight: 500;">${year}</span>`;
+                    document.querySelector('.query a').innerHTML = `year:<span class="bold">${year}</span>`;
                     break;
 
                 default:
@@ -158,7 +159,7 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                         document.querySelector('.score').innerHTML = localStorage.getItem('score');
                         setTimeout(() => {
                             game();
-                        }, 1000);
+                        }, delay);
                     });
                 } else {
                     switch (localStorage.getItem('type')) {
@@ -201,17 +202,17 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                         document.querySelector('.score').innerHTML = localStorage.getItem('score');
                         setTimeout(() => {
                             game();
-                        }, 1000);
+                        }, delay);
                     });
                 }
 
                 if (localStorage.getItem('pictures') === 'disable') {
-                    div.innerHTML = '<span style="height: 40px; width: 40px; min-height: 40px; min-width: 40px;"></span>';
+                    div.innerHTML = '<span class="no-picture"></span>';
                 } else {
-                    div.innerHTML = `<img class="picture" src="${database[random].picture}" loading="lazy" alt style="height: 40px; width: 40px; min-height: 40px; min-width: 40px; object-fit: cover; user-select: none;"></img>`;
+                    div.innerHTML = `<img class="picture" src="${database[random].picture}" loading="lazy" alt></img>`;
                 }
 
-                div.innerHTML += `<img src="${database[random].source}" loading="lazy" alt style="margin-left: 14px; height: 17px; width: 17px; min-height: 17px; min-width: 17px; object-fit: cover; user-select: none;"><span style="margin-left: 14px; overflow-wrap: anywhere; min-width: 100px; padding: 4px 0;">${database[random].title}</span>`;
+                div.innerHTML += `<img class="source" src="${database[random].source}" loading="lazy" alt><span class="title">${database[random].title}</span>`;
                 document.querySelector('.choice').appendChild(div);
             }
         }
