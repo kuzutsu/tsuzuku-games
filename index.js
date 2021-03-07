@@ -55,15 +55,19 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                 database.push({
                     episodes: e,
                     picture:
-                        d[i].thumbnail.match(/myanimelist\.net/gu)
-                            ? d[i].thumbnail.replace(d[i].thumbnail.substr(d[i].thumbnail.lastIndexOf('.')), '.webp')
-                            : d[i].thumbnail,
+                        d[i].picture.match(/myanimelist\.net/gu)
+                            ? d[i].picture.replace(d[i].picture.substr(d[i].picture.lastIndexOf('.')), '.webp')
+                            : d[i].picture,
                     season: d[i].animeSeason.season.toLowerCase(),
                     source:
                         value.match(/myanimelist\.net/gu)
                             ? 'https://myanimelist.net/img/common/pwa/launcher-icon-4x.png'
                             : 'https://kitsu.io/favicon-194x194-2f4dbec5ffe82b8f61a3c6d28a77bc6e.png',
                     tags: tt,
+                    thumbnail:
+                        d[i].thumbnail.match(/myanimelist\.net/gu)
+                            ? d[i].thumbnail.replace(d[i].thumbnail.substr(d[i].thumbnail.lastIndexOf('.')), '.webp')
+                            : d[i].thumbnail,
                     title: d[i].title,
                     year: y
                 });
@@ -206,10 +210,21 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                     });
                 }
 
-                if (localStorage.getItem('pictures') === 'disable') {
-                    div.innerHTML = '<span class="no-picture"></span>';
-                } else {
-                    div.innerHTML = `<img class="picture" src="${database[random].picture}" loading="lazy" alt></img>`;
+                switch (localStorage.getItem('thumbnails')) {
+                    case 'disable':
+                        div.innerHTML = '<span class="no-picture"></span>';
+                        break;
+
+                    case 'enable (high quality)':
+                        div.innerHTML = `<img class="picture" src="${database[random].picture}" loading="lazy" alt></img>`;
+                        break;
+
+                    case 'enable (low quality)':
+                        div.innerHTML = `<img class="picture" src="${database[random].thumbnail}" loading="lazy" alt></img>`;
+                        break;
+
+                    default:
+                        break;
                 }
 
                 div.innerHTML += `<img class="source" src="${database[random].source}" loading="lazy" alt><span class="title">${database[random].title}</span>`;
@@ -219,8 +234,8 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
 
         game();
 
-        document.querySelector('.pictures').addEventListener('change', (e) => {
-            localStorage.setItem('pictures', e.currentTarget.value);
+        document.querySelector('.thumbnails').addEventListener('change', (e) => {
+            localStorage.setItem('thumbnails', e.currentTarget.value);
             localStorage.setItem('score', 0);
             game();
         });

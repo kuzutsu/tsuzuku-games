@@ -30,8 +30,9 @@
         </header>
         <main>
             <div class="settings">
-                <select class="pictures" title="Toggle thumbnails">
-                    <option>enable</option>
+                <select class="thumbnails" title="Toggle thumbnails">
+                    <option>enable (high quality)</option>
+                    <option>enable (low quality)</option>
                     <option>disable</option>
                 </select>
                 <span class="separator"></span>
@@ -63,8 +64,8 @@
             <div class="choice"></div>
         </main>
         <script>
-            if (!localStorage.getItem('pictures')) {
-                localStorage.setItem('pictures', 'enable');
+            if (!localStorage.getItem('thumbnails')) {
+                localStorage.setItem('thumbnails', 'enable (high quality)');
             }
 
             if (!localStorage.getItem('choices')) {
@@ -79,7 +80,7 @@
                 localStorage.setItem('score', 0);
             }
 
-            document.querySelector('.pictures').value = localStorage.getItem('pictures');
+            document.querySelector('.thumbnails').value = localStorage.getItem('thumbnails');
             document.querySelector('.choices').value = localStorage.getItem('choices');
             document.querySelector('.type').value = localStorage.getItem('type');
             document.querySelector('.score').innerHTML = localStorage.getItem('score');
