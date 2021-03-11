@@ -81,8 +81,11 @@ html {
 }
 
 a {
-    line-height: 0;
     text-decoration: none;
+}
+
+.link {
+    line-height: 0;
 }
 
 .choice div {
@@ -111,14 +114,25 @@ select {
 }
 
 header,
+.menu,
 .query,
-.settings {
+.setting {
     border-bottom: 1px solid var(--background-hover);
-    display: flex;
     align-items: center;
     padding: 0 19px;
     overflow: auto;
     will-change: transform;
+    white-space: nowrap;
+}
+
+header,
+.menu,
+.query {
+    display: flex;
+}
+
+.setting {
+    display: none;
 }
 
 header {
@@ -131,18 +145,15 @@ main {
     font-size: 14px;
 }
 
-header,
-.query {
-    white-space: nowrap;
-}
-
+.menu,
 .query,
-.settings {
+.setting {
     height: 49px;
 }
 
 header,
-.settings {
+.menu,
+.setting {
     user-select: none;
 }
 
@@ -152,6 +163,16 @@ header,
 
 .separator {
     width: 14px;
+    min-width: 14px;
+}
+
+.half-separator {
+    width: 7px;
+    min-width: 7px;
+}
+
+.flex-separator {
+    width: 100%;
     min-width: 14px;
 }
 
@@ -182,10 +203,6 @@ header,
     justify-content: center;
 }
 
-.link {
-    margin-left: 14px;
-}
-
 .picture {
     height: 40px;
     width: 40px;
@@ -205,7 +222,6 @@ header,
 }
 
 .title {
-    margin-left: 14px;
     overflow-wrap: anywhere;
     min-width: 100px;
     padding: 4px 0;
