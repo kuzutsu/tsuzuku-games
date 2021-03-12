@@ -48,6 +48,10 @@
             if (!localStorage.getItem('score')) {
                 localStorage.setItem('score', 0);
             }
+
+            if (!localStorage.getItem('random')) {
+                localStorage.setItem('random', 'disable');
+            }
         </script>
         <header>
             <a href="https://kuzutsu.github.io/tsuzuku/" target="_blank" rel="noreferrer" style="color: #aaa;">Tsuzuku</a>
@@ -91,6 +95,7 @@
                     <option>episodes (without operators)</option>
                     <option>episodes (with operators)</option>
                     <option>season</option>
+                    <option>random</option>
                 </select>
             </div>
             <div class="setting">
@@ -118,8 +123,13 @@
         <script>
             document.querySelector('.thumbnails').value = localStorage.getItem('thumbnails');
             document.querySelector('.choices').value = localStorage.getItem('choices');
-            document.querySelector('.type').value = localStorage.getItem('type');
             document.querySelector('.score').innerHTML = localStorage.getItem('score');
+
+            if (localStorage.getItem('random') === 'enable') {
+                document.querySelector('.type').value = 'random';
+            } else {
+                document.querySelector('.type').value = localStorage.getItem('type');
+            }
 
             if ('serviceWorker' in navigator) {
                 navigator
