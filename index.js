@@ -430,7 +430,11 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
 
                         e.currentTarget.style.background = red;
                         document.querySelector(`.choice div:nth-child(${choice + 1})`).style.background = green;
-                        localStorage.setItem('score', Number(localStorage.getItem('score')) - 1);
+
+                        if (localStorage.getItem('negative') === 'enable' || (localStorage.getItem('negative') === 'disable' && Number(localStorage.getItem('score')))) {
+                            localStorage.setItem('score', Number(localStorage.getItem('score')) - 1);
+                        }
+
                         document.querySelector('.score').innerHTML = localStorage.getItem('score');
                         setTimeout(() => {
                             game();
@@ -474,6 +478,12 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
 
         document.querySelector('.choices').addEventListener('change', (e) => {
             localStorage.setItem('choices', e.currentTarget.value);
+            localStorage.setItem('score', 0);
+            game();
+        });
+
+        document.querySelector('.negative').addEventListener('change', (e) => {
+            localStorage.setItem('negative', e.currentTarget.value);
             localStorage.setItem('score', 0);
             game();
         });

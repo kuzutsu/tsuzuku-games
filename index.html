@@ -52,6 +52,10 @@
             if (!localStorage.getItem('random')) {
                 localStorage.setItem('random', 'disable');
             }
+
+            if (!localStorage.getItem('negative')) {
+                localStorage.setItem('negative', 'enable');
+            }
         </script>
         <header>
             <a href="https://kuzutsu.github.io/tsuzuku/" target="_blank" rel="noreferrer" style="color: #aaa;">Tsuzuku</a>
@@ -88,7 +92,7 @@
             <div class="setting">
                 <span>Type</span>
                 <span class="flex-separator"></span>
-                <select class="type" title="Select type">
+                <select class="type" title="Type">
                     <option>tags</option>
                     <option>year (without operators)</option>
                     <option>year (with operators)</option>
@@ -101,12 +105,20 @@
             <div class="setting">
                 <span>Number of choices</span>
                 <span class="flex-separator"></span>
-                <select class="choices" title="Select number of choices">
+                <select class="choices" title="Number of choices">
                     <option>2</option>
                     <option>3</option>
                     <option>4</option>
                     <option>5</option>
                     <option>10</option>
+                </select>
+            </div>
+            <div class="setting">
+                <span>Toggle negative score</span>
+                <span class="flex-separator"></span>
+                <select class="negative" title="Toggle negative score">
+                    <option>enable</option>
+                    <option>disable</option>
                 </select>
             </div>
             <div class="query">
@@ -123,6 +135,7 @@
         <script>
             document.querySelector('.thumbnails').value = localStorage.getItem('thumbnails');
             document.querySelector('.choices').value = localStorage.getItem('choices');
+            document.querySelector('.negative').value = localStorage.getItem('negative');
             document.querySelector('.score').innerHTML = localStorage.getItem('score');
 
             if (localStorage.getItem('random') === 'enable') {
