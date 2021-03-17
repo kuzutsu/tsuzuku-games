@@ -49,6 +49,10 @@
                 localStorage.setItem('score', 0);
             }
 
+            if (!localStorage.getItem('high')) {
+                localStorage.setItem('high', 0);
+            }
+
             if (!localStorage.getItem('random')) {
                 localStorage.setItem('random', 'disable');
             }
@@ -76,9 +80,13 @@
             <div class="menu">
                 <span class="settings">Toggle settings</span>
                 <span style="width: 100%; min-width: 14px;"></span>
-                <span>Score</span>
+                <span>High</span>
+                <span class="half-separator"></span>
+                <span class="high"></span>
                 <span class="separator"></span>
-                <span class="score" title="Score"></span>
+                <span>Score</span>
+                <span class="half-separator"></span>
+                <span class="score"></span>
             </div>
             <div class="setting">
                 <span>Toggle thumbnails</span>
@@ -137,6 +145,7 @@
             document.querySelector('.choices').value = localStorage.getItem('choices');
             document.querySelector('.negative').value = localStorage.getItem('negative');
             document.querySelector('.score').innerHTML = localStorage.getItem('score');
+            document.querySelector('.high').innerHTML = localStorage.getItem('high');
 
             if (localStorage.getItem('random') === 'enable') {
                 document.querySelector('.type').value = 'random';

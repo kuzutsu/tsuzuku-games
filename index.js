@@ -320,6 +320,12 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                         e.currentTarget.style.background = green;
                         localStorage.setItem('score', Number(localStorage.getItem('score')) + 1);
                         document.querySelector('.score').innerHTML = localStorage.getItem('score');
+
+                        if (Number(localStorage.getItem('score')) > Number(localStorage.getItem('high'))) {
+                            localStorage.setItem('high', Number(localStorage.getItem('score')));
+                            document.querySelector('.high').innerHTML = localStorage.getItem('high');
+                        }
+
                         setTimeout(() => {
                             game();
                         }, delay);
@@ -473,18 +479,21 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
         document.querySelector('.thumbnails').addEventListener('change', (e) => {
             localStorage.setItem('thumbnails', e.currentTarget.value);
             localStorage.setItem('score', 0);
+            localStorage.setItem('high', 0);
             game();
         });
 
         document.querySelector('.choices').addEventListener('change', (e) => {
             localStorage.setItem('choices', e.currentTarget.value);
             localStorage.setItem('score', 0);
+            localStorage.setItem('high', 0);
             game();
         });
 
         document.querySelector('.negative').addEventListener('change', (e) => {
             localStorage.setItem('negative', e.currentTarget.value);
             localStorage.setItem('score', 0);
+            localStorage.setItem('high', 0);
             game();
         });
 
@@ -497,6 +506,7 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
             }
 
             localStorage.setItem('score', 0);
+            localStorage.setItem('high', 0);
             game();
         });
 
@@ -513,6 +523,11 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
         document.querySelector('.score').addEventListener('click', (e) => {
             localStorage.setItem('score', 0);
             e.currentTarget.innerHTML = localStorage.getItem('score');
+        });
+
+        document.querySelector('.high').addEventListener('click', (e) => {
+            localStorage.setItem('high', 0);
+            e.currentTarget.innerHTML = localStorage.getItem('high');
         });
 
         document.querySelector('.reload svg').addEventListener('click', () => {
