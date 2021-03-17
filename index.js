@@ -100,6 +100,7 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
 
         function game() {
             document.querySelector('.score').innerHTML = localStorage.getItem('score');
+            document.querySelector('.high').innerHTML = localStorage.getItem('high');
 
             if (document.querySelector('.choice').innerHTML) {
                 document.querySelector('.choice').innerHTML = '';
