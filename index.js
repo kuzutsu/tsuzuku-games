@@ -157,17 +157,8 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                     break;
 
                 case 'year (without operators)':
-                    document.querySelector('.query a').href += encodeURIComponent(`year:${
-                        year
-                            ? operator + year
-                            : 'tba'
-                    }`);
-
-                    document.querySelector('.query a').innerHTML = `year:<span class="bold">${
-                        year
-                            ? operator + year
-                            : 'tba'
-                    }</span>`;
+                    document.querySelector('.query a').href += encodeURIComponent(`year:${year || 'tba'}`);
+                    document.querySelector('.query a').innerHTML = `year:<span class="bold">${year || 'tba'}</span>`;
                     break;
 
                 case 'year (with operators)':
