@@ -84,6 +84,10 @@ a {
     text-decoration: none;
 }
 
+a:hover {
+    text-decoration: underline;
+}
+
 .link {
     line-height: 0;
 }
@@ -120,8 +124,6 @@ header,
     border-bottom: 1px solid var(--background-hover);
     align-items: center;
     padding: 0 19px;
-    overflow: auto;
-    will-change: transform;
     white-space: nowrap;
 }
 
@@ -187,7 +189,6 @@ header,
 }
 
 .choice {
-    overflow: auto;
     will-change: transform;
 }
 
