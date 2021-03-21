@@ -37,7 +37,16 @@
 * {
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
-    color: var(--color);
+}
+
+.selected {
+    background: var(--selected);
+    color: var(--selected-color);
+}
+
+.selected:hover {
+    background: var(--selected-hover) !important;
+    color: var(--selected-color);
 }
 
 .bold {
@@ -58,6 +67,12 @@
 
 .choice div[style] span {
     color: #fff;
+}
+
+a,
+body,
+select {
+    color: var(--color);
 }
 
 body {
@@ -155,7 +170,8 @@ main {
 
 header,
 .menu,
-.setting {
+.setting,
+.submit {
     user-select: none;
 }
 
@@ -211,6 +227,10 @@ header,
     min-width: 40px;
     object-fit: cover;
     user-select: none;
+}
+
+.dim {
+    opacity: 0.3;
 }
 
 .source {

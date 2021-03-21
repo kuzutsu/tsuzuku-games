@@ -1,6 +1,6 @@
 const
+    choice = [],
     database = [],
-    delay = 1000,
     episodes = [],
     green = '#2e7d32',
     max = {
@@ -111,10 +111,27 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
             }
 
             const
-                choice = Math.round(Math.random() * (Number(localStorage.getItem('choices')) - 1)),
+                choices =
+                    localStorage.getItem('selection') === 'single'
+                        ? 1
+                        : Math.round(Math.random() * Number(localStorage.getItem('choices'))),
                 operator = operators[Math.round(Math.random() * (operators.length - 1))],
                 season = seasons[Math.round(Math.random() * (seasons.length - 1))],
                 tag = tags[Math.round(Math.random() * (tags.length - 1))];
+
+            choice.splice(0);
+
+            if (choices) {
+                for (let i = 0; i < choices; i++) {
+                    let n = Math.round(Math.random() * (Number(localStorage.getItem('choices')) - 1));
+
+                    while (choice.indexOf(n) > -1) {
+                        n = Math.round(Math.random() * (Number(localStorage.getItem('choices')) - 1));
+                    }
+
+                    choice.push(n);
+                }
+            }
 
             let episode = episodes[Math.round(Math.random() * (episodes.length - 1))],
                 year = years[Math.round(Math.random() * (years.length - 1))];
@@ -205,7 +222,7 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                 const div = document.createElement('div');
                 let random = Math.round(Math.random() * (database.length - 1));
 
-                if (i === choice) {
+                if (choice.indexOf(i) > -1) {
                     switch (localStorage.getItem('type')) {
                         case 'episodes (without operators)':
                             while (database[random].episodes !== episode) {
@@ -299,29 +316,6 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                             }
                             break;
                     }
-
-                    div.addEventListener('click', (e) => {
-                        if (e.target.classList.contains('source')) {
-                            return;
-                        }
-
-                        if (document.querySelector('.choice div[style]')) {
-                            return;
-                        }
-
-                        e.currentTarget.style.background = green;
-                        localStorage.setItem('score', Number(localStorage.getItem('score')) + 1);
-                        document.querySelector('.score').innerHTML = localStorage.getItem('score');
-
-                        if (Number(localStorage.getItem('score')) > Number(localStorage.getItem('high'))) {
-                            localStorage.setItem('high', Number(localStorage.getItem('score')));
-                            document.querySelector('.high').innerHTML = localStorage.getItem('high');
-                        }
-
-                        setTimeout(() => {
-                            game();
-                        }, delay);
-                    });
                 } else {
                     switch (localStorage.getItem('type')) {
                         case 'episodes (without operators)':
@@ -416,28 +410,6 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                             }
                             break;
                     }
-
-                    div.addEventListener('click', (e) => {
-                        if (e.target.classList.contains('source')) {
-                            return;
-                        }
-
-                        if (document.querySelector('.choice div[style]')) {
-                            return;
-                        }
-
-                        e.currentTarget.style.background = red;
-                        document.querySelector(`.choice div:nth-child(${choice + 1})`).style.background = green;
-
-                        if (localStorage.getItem('negative') === 'enable' || (localStorage.getItem('negative') === 'disable' && Number(localStorage.getItem('score')))) {
-                            localStorage.setItem('score', Number(localStorage.getItem('score')) - 1);
-                        }
-
-                        document.querySelector('.score').innerHTML = localStorage.getItem('score');
-                        setTimeout(() => {
-                            game();
-                        }, delay);
-                    });
                 }
 
                 switch (localStorage.getItem('thumbnails')) {
@@ -462,11 +434,88 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                     '<span class="separator"></span>' +
                     `<span class="title">${database[random].title}</span>`;
 
+                div.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('source')) {
+                        return;
+                    }
+
+                    if (document.querySelector('.choice div[style]')) {
+                        return;
+                    }
+
+                    if (localStorage.getItem('selection') === 'single' && document.querySelector('.selected')) {
+                        document.querySelector('.selected').classList.remove('selected');
+                    }
+
+                    e.currentTarget.classList.toggle('selected');
+                });
+
                 document.querySelector('.choice').appendChild(div);
             }
         }
 
         game();
+
+        document.querySelector('.submit').addEventListener('click', () => {
+            let score = 0;
+
+            if (document.querySelector('.choice div[style]')) {
+                return;
+            }
+
+            if (localStorage.getItem('selection') === 'single' && !document.querySelector('.selected')) {
+                return;
+            }
+
+            for (let i = 0; i < Number(localStorage.getItem('choices')); i++) {
+                if (choice.indexOf(i) > -1) {
+                    if (document.querySelector(`.choice div:nth-child(${i + 1})`).classList.contains('selected')) {
+                        document.querySelector(`.choice div:nth-child(${i + 1})`).classList.remove('selected');
+                        document.querySelector(`.choice div:nth-child(${i + 1})`).style.background = green;
+                        score += 1;
+                    } else {
+                        if (localStorage.getItem('selection') !== 'single') {
+                            document.querySelector(`.choice div:nth-child(${i + 1})`).style.background = red;
+                            score -= 1;
+                        }
+                    }
+                } else {
+                    if (document.querySelector(`.choice div:nth-child(${i + 1})`).classList.contains('selected')) {
+                        document.querySelector(`.choice div:nth-child(${i + 1})`).classList.remove('selected');
+                        document.querySelector(`.choice div:nth-child(${i + 1})`).style.background = red;
+                        score -= 1;
+                    } else {
+                        if (localStorage.getItem('selection') !== 'single') {
+                            document.querySelector(`.choice div:nth-child(${i + 1})`).style.background = green;
+                            score += 1;
+                        }
+                    }
+
+                    document.querySelector(`.choice div:nth-child(${i + 1})`).classList.add('dim');
+                }
+            }
+
+
+            localStorage.setItem('score', Number(localStorage.getItem('score')) + score);
+
+            if (localStorage.getItem('negative') === 'disable' && Number(localStorage.getItem('score')) < 0) {
+                localStorage.setItem('score', 0);
+            }
+
+            document.querySelector('.score').innerHTML = localStorage.getItem('score');
+
+            if (Number(localStorage.getItem('score')) > Number(localStorage.getItem('high'))) {
+                localStorage.setItem('high', Number(localStorage.getItem('score')));
+                document.querySelector('.high').innerHTML = localStorage.getItem('high');
+            }
+        });
+
+        document.querySelector('.selection').addEventListener('change', (e) => {
+            localStorage.setItem('selection', e.currentTarget.value);
+            localStorage.setItem('score', 0);
+            localStorage.setItem('high', 0);
+            game();
+        });
 
         document.querySelector('.thumbnails').addEventListener('change', (e) => {
             localStorage.setItem('thumbnails', e.currentTarget.value);

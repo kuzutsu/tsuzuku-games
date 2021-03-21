@@ -60,6 +60,10 @@
             if (!localStorage.getItem('negative')) {
                 localStorage.setItem('negative', 'enable');
             }
+
+            if (!localStorage.getItem('selection')) {
+                localStorage.setItem('selection', 'single');
+            }
         </script>
         <header>
             <a href="https://kuzutsu.github.io/tsuzuku/" target="_blank" rel="noreferrer">Tsuzuku</a>
@@ -87,6 +91,14 @@
                 <span>Score</span>
                 <span class="half-separator"></span>
                 <span class="score bold"></span>
+            </div>
+            <div class="setting">
+                <span>Selection</span>
+                <span class="flex-separator"></span>
+                <select class="selection" title="Selection">
+                    <option>single</option>
+                    <option>multiple</option>
+                </select>
             </div>
             <div class="setting">
                 <span>Toggle thumbnails</span>
@@ -137,12 +149,15 @@
                 </span>
                 <span class="separator"></span>
                 <a href target="_blank" rel="noreferrer"></a>
+                <span class="flex-separator"></span>
+                <span class="submit bold">Submit</span>
             </div>
             <div class="choice"></div>
         </main>
         <script>
             document.querySelector('.thumbnails').value = localStorage.getItem('thumbnails');
             document.querySelector('.choices').value = localStorage.getItem('choices');
+            document.querySelector('.selection').value = localStorage.getItem('selection');
             document.querySelector('.negative').value = localStorage.getItem('negative');
 
             if (localStorage.getItem('random') === 'enable') {
@@ -170,7 +185,7 @@
                     });
             }
 
-            document.querySelector('.theme').addEventListener('click', () => {
+            document.querySelector('.theme svg').addEventListener('click', () => {
                 if (localStorage.getItem('theme') === 'dark') {
                     document.body.classList.remove('dark');
                     document.body.classList.add('light');
