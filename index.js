@@ -544,6 +544,13 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
             game();
         });
 
+        document.querySelector('.reset-incorrect').addEventListener('change', (e) => {
+            localStorage.setItem('reset-incorrect', e.currentTarget.value);
+            localStorage.setItem('score', 0);
+            localStorage.setItem('high', 0);
+            game();
+        });
+
         document.querySelector('.type').addEventListener('change', (e) => {
             if (e.currentTarget.value === 'random') {
                 localStorage.setItem('random', 'enable');
