@@ -64,6 +64,10 @@
             if (!localStorage.getItem('selection')) {
                 localStorage.setItem('selection', 'single');
             }
+
+            if (!localStorage.getItem('reset-incorrect')) {
+                localStorage.setItem('reset-incorrect', 'disable');
+            }
         </script>
         <header>
             <a href="https://kuzutsu.github.io/tsuzuku/" target="_blank" rel="noreferrer">Tsuzuku</a>
@@ -141,6 +145,14 @@
                     <option>disable</option>
                 </select>
             </div>
+            <div class="setting">
+                <span>Reset score when incorrect</span>
+                <span class="flex-separator"></span>
+                <select class="reset-incorrect" title="Reset score when incorrect">
+                    <option>enable</option>
+                    <option>disable</option>
+                </select>
+            </div>
             <div class="query">
                 <span class="reload" title="Reload">
                     <svg viewBox="0 0 24 24" width="19" height="19">
@@ -159,6 +171,7 @@
             document.querySelector('.choices').value = localStorage.getItem('choices');
             document.querySelector('.selection').value = localStorage.getItem('selection');
             document.querySelector('.negative').value = localStorage.getItem('negative');
+            document.querySelector('.reset-incorrect').value = localStorage.getItem('reset-incorrect');
 
             if (localStorage.getItem('random') === 'enable') {
                 document.querySelector('.type').value = 'random';

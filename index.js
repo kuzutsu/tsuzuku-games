@@ -457,7 +457,8 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
         game();
 
         document.querySelector('.submit').addEventListener('click', () => {
-            let score = 0;
+            let incorrect = false,
+                score = 0;
 
             if (document.querySelector('.choice div[style]')) {
                 return;
@@ -477,6 +478,7 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                         if (localStorage.getItem('selection') !== 'single') {
                             document.querySelector(`.choice div:nth-child(${i + 1})`).style.background = red;
                             score -= 1;
+                            incorrect = true;
                         }
                     }
                 } else {
@@ -484,6 +486,7 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                         document.querySelector(`.choice div:nth-child(${i + 1})`).classList.remove('selected');
                         document.querySelector(`.choice div:nth-child(${i + 1})`).style.background = red;
                         score -= 1;
+                        incorrect = true;
                     } else {
                         if (localStorage.getItem('selection') !== 'single') {
                             document.querySelector(`.choice div:nth-child(${i + 1})`).style.background = green;
@@ -495,8 +498,11 @@ fetch('https://raw.githubusercontent.com/manami-project/anime-offline-database/m
                 }
             }
 
-
-            localStorage.setItem('score', Number(localStorage.getItem('score')) + score);
+            if (localStorage.getItem('reset-incorrect') === 'enable' && incorrect) {
+                localStorage.setItem('score', 0);
+            } else {
+                localStorage.setItem('score', Number(localStorage.getItem('score')) + score);
+            }
 
             if (localStorage.getItem('negative') === 'disable' && Number(localStorage.getItem('score')) < 0) {
                 localStorage.setItem('score', 0);
