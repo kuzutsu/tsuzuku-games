@@ -1,12 +1,7 @@
 {
     "env": {
         "browser": true,
-        "es2020": true,
-        "worker": true
-    },
-    "globals": {
-        "Fuse": "readonly",
-        "Tabulator": "readonly"
+        "es2020": true
     },
     "extends": "eslint:all",
     "parserOptions": {
@@ -19,6 +14,7 @@
         "complexity": "off",
         "dot-location": "off",
         "eol-last": "off",
+        "func-names": "off",
         "func-style": "off",
         "function-call-argument-newline": "off",
         "function-paren-newline": "off",
@@ -38,13 +34,14 @@
         "no-extra-parens": ["error", "all", {
             "nestedBinaryExpressions": false
         }],
+        "no-invalid-this": "off",
         "no-lonely-if": "off",
         "no-loop-func": "off",
         "no-magic-numbers": "off",
         "no-nested-ternary": "off",
         "no-plusplus": "off",
         "no-ternary": "off",
-        "no-underscore-dangle": "off",
+        "object-shorthand": "off",
         "padded-blocks": "off",
         "prefer-destructuring": "off",
         "quote-props": "off",
